@@ -1,0 +1,25 @@
+{
+  "name": "R (rocker/r-ver base)",
+
+  "image": "ghcr.io/rocker-org/devcontainer/r-ver:4.2",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/rstudio-server": {},
+    "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
+      "packages": "readr"
+    }
+  },
+  "postAttachCommand": {
+    "rstudio-start": "rserver"
+  },
+  "forwardPorts": [8787],
+  "portsAttributes": {
+    "8787": {
+      "label": "RStudio IDE"
+    }
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["README.md"]
+    }
+  }
+}
