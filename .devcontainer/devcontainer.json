@@ -11,14 +11,7 @@
     },
     /* add additional r packages here */
     "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
-      "packages": "github::rstudio/renv,readr,dplyr,ggplot2,sf,lubridate,mapview"
-    }
-  },
-
-  "customizations": {
-    /* these files will open when you launch as a codespace */
-    "codespaces": {
-      "openFiles": ["index.qmd"]
+      "packages": "github::rstudio/renv"
     }
   },
   /* setup RStudio */
@@ -30,5 +23,13 @@
     "8787": {
       "label": "RStudio IDE"
     }
-  }
+  },
+  /* setup renv: https://cafekapper.dk/posts/devcontainer_renv/ */
+  "postCreateCommand": "R -q -e 'renv::consent(provided = TRUE); renv::restore(prompt = FALSE)'",
+  "remoteEnv": {
+    "RENV_PATHS_CACHE": "/renv/cache"
+  },
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/R/renv/cache/,target=/renv/cache,type=bind"
+  ]
 }
