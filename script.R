@@ -1,4 +1,4 @@
 library(readr)
 
-df <- read_csv('./data/people.csv')
+df <- read_csv('./data/data.csv')
 head(df)

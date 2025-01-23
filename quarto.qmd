@@ -1,10 +1,67 @@
-```{r}
-library(readr)
+---
+title: "Dev containers with R and Quarto"
+format: html
+---
+
+
+
+```{r, load_packages}
+library(readr) # read and write tabular data
+library(dplyr) # manipulate data
+library(ggplot2) # create data visualizations
+library(sf) # handle vector geospatial data
+library(lubridate) # manipulate dates
+library(mapview) # create interactive maps
 
 ```
 
-```{r}
-df <- read_csv('./data/people.csv')
-head(df)
+Load iNaturalist data from City Nature Challenge Los Angeles 2013-2024. There are over 191,000 observations.
+
+```{r, load_inat_csv}
+#| error: false
+#| warning: false
+#| message: false
+
+inat <- read_csv("data/data.csv")
 ```
 
+Create summaries of the data. For instance, get the 10 most commonly observed 'species'.
+
+```{r, top_ten_species}
+
+top_10 <- inat %>%
+  select(common_name, scientific_name) %>%
+  count(common_name, scientific_name, name='count')  %>%
+  arrange(desc(count)) %>%
+  slice(1:10)
+
+top_10
+```
+
+Create maps. For example, create a map showing all the observations for Western Fence Lizard
+
+```{r, map_of_western_fence_lizard}
+#| eval: false
+
+lizard <- inat %>%
+  st_as_sf(coords = c("longitude", "latitude"),   crs = 4326, remove=FALSE) %>%
+  select(id, user_login, common_name, scientific_name, observed_on,  url, longitude, latitude, geometry) %>%
+  filter(common_name == 'Western Fence Lizard')
+
+
+mapview(lizard)
+```
+
+![](images/mapview/intro-data-analysis/map_of_western_fence_lizard.png){alt="map of western fence lizard"}
+
+Create charts. For example, create a bar chart showing the number of observations per year.
+
+```{r, chart_observations_per_year}
+
+inat %>%
+  mutate(year = year(observed_on))  %>%
+  group_by(year) %>%
+  ggplot(aes(x = year)) +
+  geom_bar()
+
+```

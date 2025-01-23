@@ -1,13 +1,27 @@
 {
   "name": "R (rocker/r-ver base)",
-
+  /* set the r version here */
   "image": "ghcr.io/rocker-org/devcontainer/r-ver:4.2",
+
   "features": {
     "ghcr.io/rocker-org/devcontainer-features/rstudio-server": {},
+    /*  packages needed by sf*/
+    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+      "packages": "libudunits2-dev,libgdal-dev,libgeos-dev,libproj-dev"
+    },
+    /* add additional r packages here */
     "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
-      "packages": "readr"
+      "packages": "github::rstudio/renv,readr,dplyr,ggplot2,sf,lubridate,mapview"
     }
   },
+
+  "customizations": {
+    /* these files will open when you launch as a codespace */
+    "codespaces": {
+      "openFiles": ["index.qmd"]
+    }
+  },
+  /* setup RStudio */
   "postAttachCommand": {
     "rstudio-start": "rserver"
   },
@@ -15,11 +29,6 @@
   "portsAttributes": {
     "8787": {
       "label": "RStudio IDE"
-    }
-  },
-  "customizations": {
-    "codespaces": {
-      "openFiles": ["README.md"]
     }
   }
 }
