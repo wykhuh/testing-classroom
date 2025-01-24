@@ -4,6 +4,7 @@
   "image": "ghcr.io/rocker-org/devcontainer/r-ver:4.4",
 
   "features": {
+    "ghcr.io/rocker-org/devcontainer-features/renv-cache:0": {},
     "ghcr.io/rocker-org/devcontainer-features/rstudio-server": {},
     /*  packages needed by sf*/
     "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
@@ -14,7 +15,7 @@
       "packages": "github::rstudio/renv"
     }
   },
-  /* setup RStudio */
+  /* setup RStudio server */
   "postAttachCommand": {
     "rstudio-start": "rserver"
   },
@@ -31,5 +32,11 @@
   },
   "mounts": [
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/R/renv/cache/,target=/renv/cache,type=bind"
-  ]
+  ],
+  "customizations": {
+    /* setup vscode https://jamesgoldie.dev/writing/dev-containers-in-r/ */
+    "vscode": {
+      "extensions": ["reditorsupport.r"]
+    }
+  }
 }
