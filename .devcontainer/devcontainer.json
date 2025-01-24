@@ -1,7 +1,7 @@
 {
   "name": "R (rocker/r-ver base)",
   /* set the r version here */
-  "image": "ghcr.io/rocker-org/devcontainer/r-ver:4.2",
+  "image": "ghcr.io/rocker-org/devcontainer/r-ver:4.4",
 
   "features": {
     "ghcr.io/rocker-org/devcontainer-features/rstudio-server": {},
